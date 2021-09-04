@@ -15,3 +15,20 @@ func set_collision(texture) :
 		add_child(collider)
 
 	pass
+
+
+func get_collision_polygon() :
+	var tex_image = $TextureRect.texture.get_data()
+	var bitmap = BitMap.new()
+	bitmap.create_from_image_alpha(tex_image)
+	
+	var polygons = bitmap.opaque_to_polygons(Rect2(Vector2(0, 0), bitmap.get_size()), 0.1)
+	var colliders = []
+	for polygon in polygons:
+		var collider = CollisionPolygon2D.new()
+		collider.polygon = polygon
+		colliders.append(collider)
+	
+	return colliders
+	pass
+	
